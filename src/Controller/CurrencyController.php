@@ -13,14 +13,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Currency;
 use Symfony\Component\Routing\Annotation\Route;
-use GuzzleHttp\Client;
+use App\Services\Api\CurrencyRates as CurrencyProvider;
 
 class CurrencyController extends AbstractController
 {
+    private CurrencyProvider $currencyProvider;
+
+    public function __construct(CurrencyProvider $currencyProvider)
+    {
+        $this->currencyProvider = $currencyProvider;
+    }
+
     #[Route('/exchange/rates')]
     public function getExchangeRates()
     {
-        $client = new Client(['base_uri' => 'http://api.nbp.pl/api/exchangerates/tables/A/']);
+        $rates = $this->currencyProvider->integration();
+    }
+
+    #[Route('/add/currency')]
+    public function addCurrency()
+    {
     }
 
 }
