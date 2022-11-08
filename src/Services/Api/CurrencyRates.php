@@ -10,14 +10,31 @@ declare(strict_types=1);
 namespace App\Services\Api;
 
 use GuzzleHttp\Client;
+use App\Entity\Currency;
+use Symfony\Component\Serializer\SerializerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CurrencyRates
 {
+    private SerializerInterface $serializer;
+
+    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer)
+    {
+        $this->serializer = $serializer;
+    }
+
     public function integration(): Client
     {
         $client = new Client(['base_uri' => 'http://api.nbp.pl/api/exchangerates/tables/A/']);
 
         return $client;
+    }
+
+    public function deserializeCurrency()
+    {
+        $currencies = $this->serializer->deserialize($this->integration(), Currency::class, 'xml');
+
+        return $currencies;
     }
 
 }
