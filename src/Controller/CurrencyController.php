@@ -20,6 +20,7 @@ class CurrencyController extends AbstractController
     #[Route('/exchange/rates')]
     public function getExchangeRates()
     {
+        $client = new Client(['base_uri' => 'http://api.nbp.pl/api/exchangerates/tables/A/']);
     }
 
 }
