@@ -46,12 +46,14 @@ class LoadData extends Command
         $results = $this->currencyProvider->deserializeCurrency();
 
         foreach ($results as $row) {
-            $currency = new Currency();
-            $currency->setName($row['Currency']);
-            $currency->setCurrencyCode($row['Code']);
-            $currency->setExchangeRate($row['Mid']);
+            foreach ($row['rates'] as $rate) {
+                $currency = new Currency();
+                $currency->setName($rate['currency']);
+                $currency->setCurrencyCode($rate['code']);
+                $currency->setExchangeRate($rate['mid']);
 
-            $this->em->persist($currency);
+                $this->em->persist($currency);
+            }
         }
 
         $this->em->flush();
