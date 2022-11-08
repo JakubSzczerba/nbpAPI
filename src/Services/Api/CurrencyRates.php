@@ -32,7 +32,9 @@ class CurrencyRates
 
     public function deserializeCurrency()
     {
-        $currencies = $this->serializer->deserialize($this->integration(), Currency::class, 'xml');
+        $data = $this->integration()->get('http://api.nbp.pl/api/exchangerates/tables/A/')->getBody()->getContents();
+
+        $currencies = $this->serializer->deserialize($data, Currency::class, 'xml');
 
         return $currencies;
     }
