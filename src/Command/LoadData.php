@@ -59,5 +59,4 @@ class LoadData extends Command
         $this->em->flush();
         $io->success('Everything went well');
     }
-
 }
