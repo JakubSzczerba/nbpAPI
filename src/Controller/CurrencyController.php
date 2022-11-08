@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Currency;
 use Symfony\Component\Routing\Annotation\Route;
+use GuzzleHttp\Client;
 
 class CurrencyController extends AbstractController
 {
